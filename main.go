@@ -12,8 +12,10 @@ const EXPERT = "Customer Engineer"
 
 func main() {
 	salesStage := getSalesStage()
-	if EXPERT == "Customer Engineer" && salesStage < 4 && salesStage > 1 {
+	if EXPERT == "Customer Engineer" && salesStage <= 4 && salesStage >= 0 {
 		invokeCE(salesStage)
+	} else {
+		fmt.Printf("%d is not a valid sales stage\n", salesStage)
 	}
 }
 
