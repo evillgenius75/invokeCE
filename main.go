@@ -12,24 +12,25 @@ const EXPERT = "Customer Engineer"
 
 func main() {
 	salesStage := getSalesStage()
-	if EXPERT == "Customer Engineer" && salesStage <= 4 && salesStage >= 0 {
+	if EXPERT == "Customer Engineer" && salesStage <= 4 || salesStage >= 0 {
 		invokeCE(salesStage)
-	} else {
-		fmt.Printf("%d is not a valid sales stage\n", salesStage)
 	}
 }
 
 func invokeCE(stage int32) {
-	switch stage {
-	case 1, 2, 3, 4:
-		fmt.Printf("A %s will help you there. go/new-er\n", EXPERT)
+	switch {
+	case stage > 0 && stage <= 4:
+		fmt.Printf("A %s will help you with that. go/new-er\n", EXPERT)
+	case stage < 0 || stage >= 5:
+		fmt.Println("Not  valid Sales Stage")
+		fallthrough
 	default:
-		fmt.Println("Call an FSR")
+		fmt.Println("Talk to the customer and determine their needs!")
 	}
 }
 
 func getSalesStage() int32 {
-	fmt.Print("Enter your sales stage: ")
+	fmt.Print("Enter your sales stage (1-4), or any character if unknown: ")
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	stage, _ := strconv.Atoi(strings.TrimSuffix(input, "\n"))
