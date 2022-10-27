@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -12,20 +13,21 @@ const EXPERT = "Customer Engineer"
 
 func main() {
 	salesStage := getSalesStage()
-	if EXPERT == "Customer Engineer" && salesStage <= 4 || salesStage >= 0 {
-		invokeCE(salesStage)
+	msg, err := invokeCE(salesStage)
+	if err != nil {
+		fmt.Printf("ERROR: %s, engage a %s and let's get this done!", err, EXPERT)
 	}
+	fmt.Println(msg)
 }
 
-func invokeCE(stage int32) {
+func invokeCE(stage int32) (string, error) {
 	switch {
 	case stage > 0 && stage <= 4:
-		fmt.Printf("A %s will help you with that. go/new-er\n", EXPERT)
+		return fmt.Sprintf("A %s will help you with that. go/new-er", EXPERT), nil
 	case stage < 0 || stage >= 5:
-		fmt.Println("Not  valid Sales Stage")
-		fallthrough
+		return "", fmt.Errorf("%d is not a valid Sales Stage", stage)
 	default:
-		fmt.Println("Talk to the customer and determine their needs!")
+		return "", errors.New("need help qulaifying")
 	}
 }
 
