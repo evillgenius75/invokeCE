@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-const EXPERT = "Customer Engineer"
+const expert = "Customer Engineer"
 
 func main() {
 	salesStage := getSalesStage()
 	msg, err := invokeCE(salesStage)
 	if err != nil {
-		fmt.Printf("ERROR: %s, engage a %s and let's get this done!", err, EXPERT)
+		fmt.Printf("ERROR: %s, engage a %s and let's get this done!", err, expert)
 	}
 	fmt.Println(msg)
 }
@@ -23,7 +23,7 @@ func main() {
 func invokeCE(stage int32) (string, error) {
 	switch {
 	case stage > 0 && stage <= 4:
-		return fmt.Sprintf("A %s will help you with that. go/new-er", EXPERT), nil
+		return fmt.Sprintf("A %s will help you with that. go/new-er", expert), nil
 	case stage < 0 || stage >= 5:
 		return "", fmt.Errorf("%d is not a valid Sales Stage", stage)
 	default:
